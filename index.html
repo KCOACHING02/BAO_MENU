@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Boîte à Outils</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: #f3e9dd;
+            color: #4a4a4a;
+            overflow-x: hidden;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInSlow {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInMenu {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .slogan {
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #b79c84;
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #d8b98b;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: fadeInSlow 1.4s ease-out forwards;
+        }
+
+        h1 {
+            font-size: 34px;
+            margin-bottom: 40px;
+            font-weight: 600;
+            color: #6b5a4a;
+            opacity: 0;
+            animation: fadeInSlow 1.6s ease-out forwards;
+        }
+
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 22px;
+            margin-top: 30px;
+        }
+
+        .menu-item {
+            background: #fff;
+            padding: 28px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 18px;
+            font-weight: 500;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.10);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            opacity: 0;
+            animation: fadeInMenu 1s ease-out forwards;
+        }
+
+        .menu-item:nth-child(1) { animation-delay: 1.8s; }
+        .menu-item:nth-child(2) { animation-delay: 2s; }
+        .menu-item:nth-child(3) { animation-delay: 2.2s; }
+        .menu-item:nth-child(4) { animation-delay: 2.4s; }
+
+        .menu-item:hover {
+            background: #d8b98b;
+            color: #1a1a1a;
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+        }
+
+        .icon {
+            width: 42px;
+            height: 42px;
+            stroke: #b79c84;
+            opacity: 0.9;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover .icon {
+            transform: scale(1.15);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="slogan">Brille & Vibre</div>
+
+    <img src="menu.jpg" alt="Logo" class="logo">
+
+    <h1>Ma Boîte à Outils</h1>
+
+    <div class="menu">
+
+        <!-- Les Bases : pierres zen -->
+        <a href="les-bases.html" class="menu-item">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="17" rx="7" ry="3.5"/>
+                <ellipse cx="12" cy="11" rx="5" ry="2.5"/>
+                <ellipse cx="12" cy="6" rx="3" ry="1.5"/>
+            </svg>
+            Les Bases
+        </a>
+
+        <!-- Kit Code Liberté : papillon -->
+        <a href="kit-code-liberte.html" class="menu-item">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 12c-2-4-6-6-8-5s0 5 4 6c-4 1-6 4-4 6s6-1 8-5"/>
+                <path d="M12 12c2-4 6-6 8-5s0 5-4 6c4 1 6 4 4 6s-6-1-8-5"/>
+                <circle cx="12" cy="12" r="1"/>
+            </svg>
+            Kit Code Liberté
+        </a>
+
+        <!-- Prompts : bulle arrondie -->
+        <a href="prompts.html" class="menu-item">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/>
+            </svg>
+            Prompts
+        </a>
+
+        <!-- Aides à la vente : main ouverte -->
+        <a href="aides-vente.html" class="menu-item">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 15c2 1 4 2 6 2s4-1 6-3"/>
+                <path d="M4 12c2 1 4 2 6 2s4-1 6-3"/>
+                <path d="M4 9c2 1 4 2 6 2s4-1 6-3"/>
+            </svg>
+            Aides à la vente
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
