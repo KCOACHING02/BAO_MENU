@@ -1,178 +1,374 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Boîte à Outils</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Brille & Vibre — Ma Boîte à Outils</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: "Segoe UI", sans-serif;
-            background: #f3e9dd;
-            color: #4a4a4a;
-            overflow-x: hidden;
-        }
+  <style>
+    *, *::before, *::after {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    :root {
+      --gold:        #C9A84C;
+      --gold-light:  #E8CC80;
+      --gold-pale:   #F5EDD4;
+      --cream:       #FAF6EF;
+      --beige:       #EDE4D3;
+      --text:        #3A2E24;
+      --text-light:  #8C7560;
+      --shadow:      rgba(90,60,30,0.14);
+    }
 
-        @keyframes fadeInSlow {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-        @keyframes fadeInMenu {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    /* Warm radial glow */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: min(700px, 130vw);
+      height: 500px;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.2) 0%, transparent 68%);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            text-align: center;
-            animation: fadeIn 1s ease-out forwards;
-        }
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: clamp(32px, 7vw, 60px) clamp(20px, 5vw, 36px) 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        .slogan {
-            font-size: 30px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: #b79c84;
-            margin-bottom: 10px;
-            opacity: 0;
-            animation: fadeIn 1.2s ease-out forwards;
-        }
+    /* ── Header ── */
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: clamp(32px, 7vw, 48px);
+      opacity: 0;
+      animation: riseIn 0.8s cubic-bezier(.22,.68,0,1.2) 0.1s forwards;
+    }
 
-        .logo {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: top; /* <-- AJOUT POUR NE PLUS COUPER LA TÊTE */
-            border: 5px solid #d8b98b;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-            margin-bottom: 25px;
-            opacity: 0;
-            animation: fadeInSlow 1.4s ease-out forwards;
-        }
+    .logo-ring {
+      position: relative;
+      width: clamp(88px, 22vw, 120px);
+      height: clamp(88px, 22vw, 120px);
+      margin-bottom: 20px;
+    }
 
-        h1 {
-            font-size: 34px;
-            margin-bottom: 40px;
-            font-weight: 600;
-            color: #6b5a4a;
-            opacity: 0;
-            animation: fadeInSlow 1.6s ease-out forwards;
-        }
+    .logo-ring::before {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      background: conic-gradient(var(--gold), var(--gold-light), var(--gold-pale), var(--gold), var(--gold-light), var(--gold));
+      animation: spin 8s linear infinite;
+    }
 
-        .menu {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 22px;
-            margin-top: 30px;
-        }
+    .logo-ring::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: var(--cream);
+    }
 
-        .menu-item {
-            background: #fff;
-            padding: 28px;
-            border-radius: 16px;
-            text-decoration: none;
-            color: #4a4a4a;
-            font-size: 18px;
-            font-weight: 500;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.10);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 14px;
-            opacity: 0;
-            animation: fadeInMenu 1s ease-out forwards;
-        }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-        .menu-item:nth-child(1) { animation-delay: 1.8s; }
-        .menu-item:nth-child(2) { animation-delay: 2s; }
-        .menu-item:nth-child(3) { animation-delay: 2.2s; }
-        .menu-item:nth-child(4) { animation-delay: 2.4s; }
+    .logo-img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
 
-        .menu-item:hover {
-            background: #d8b98b;
-            color: #1a1a1a;
-            transform: translateY(-6px) scale(1.02);
-            box-shadow: 0 10px 22px rgba(0,0,0,0.18);
-        }
+    .brand {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(13px, 3.2vw, 15px);
+      font-style: italic;
+      letter-spacing: 2px;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
 
-        .icon {
-            width: 42px;
-            height: 42px;
-            stroke: #b79c84;
-            opacity: 0.9;
-            transition: transform 0.3s ease;
-        }
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 8vw, 42px);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--text);
+      text-align: center;
+    }
 
-        .menu-item:hover .icon {
-            transform: scale(1.15);
-        }
-    </style>
+    .page-title em { font-style: italic; color: var(--gold); }
+
+    .subtitle {
+      margin-top: 10px;
+      font-size: clamp(13px, 3.2vw, 15px);
+      color: var(--text-light);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .divider {
+      width: 48px; height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 2px;
+      margin: 14px auto 0;
+    }
+
+    /* ── Grid ── */
+    .grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(12px, 3vw, 18px);
+    }
+
+    /* ── Card ── */
+    .card {
+      position: relative;
+      background: #fff;
+      border-radius: 20px;
+      padding: clamp(18px, 5vw, 26px) clamp(14px, 4vw, 20px);
+      text-decoration: none;
+      color: var(--text);
+      box-shadow: 0 2px 8px var(--shadow), 0 8px 24px rgba(90,60,30,0.07);
+      border: 1px solid rgba(201,168,76,0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      overflow: hidden;
+      transition: transform 0.28s cubic-bezier(.22,.68,0,1.3), box-shadow 0.28s ease, border-color 0.28s ease;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    /* Shimmer */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(105deg, transparent, rgba(255,255,255,0.55), transparent);
+      transition: left 0.5s ease;
+      pointer-events: none;
+    }
+
+    .card:hover::before { left: 160%; }
+
+    /* Gold corner */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 60px; height: 60px;
+      background: conic-gradient(from 135deg, var(--gold-pale), transparent 60%);
+      border-radius: 0 20px 0 0;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+
+    .card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 4px 16px var(--shadow), 0 16px 40px rgba(90,60,30,0.12); border-color: rgba(201,168,76,0.5); }
+    .card:hover::after { opacity: 1; }
+    .card:active { transform: scale(0.97); transition-duration: 0.1s; }
+
+    .card:nth-child(1) { animation: riseIn 0.7s cubic-bezier(.22,.68,0,1.2) 0.4s forwards; }
+    .card:nth-child(2) { animation: riseIn 0.7s cubic-bezier(.22,.68,0,1.2) 0.55s forwards; }
+    .card:nth-child(3) { animation: riseIn 0.7s cubic-bezier(.22,.68,0,1.2) 0.7s forwards; }
+    .card:nth-child(4) { animation: riseIn 0.7s cubic-bezier(.22,.68,0,1.2) 0.85s forwards; }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(18px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Icon */
+    .icon-wrap {
+      width: clamp(40px, 10vw, 50px);
+      height: clamp(40px, 10vw, 50px);
+      background: var(--gold-pale);
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.3s, transform 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card:hover .icon-wrap { background: linear-gradient(135deg, var(--gold), var(--gold-light)); transform: scale(1.1); }
+
+    .icon-wrap svg {
+      width: clamp(18px, 5vw, 24px);
+      height: clamp(18px, 5vw, 24px);
+      stroke: var(--gold);
+      transition: stroke 0.3s;
+    }
+
+    .card:hover .icon-wrap svg { stroke: white; }
+
+    .card-label {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(14px, 3.8vw, 17px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text);
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-desc {
+      font-size: clamp(11px, 2.8vw, 13px);
+      color: var(--text-light);
+      line-height: 1.45;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-arrow {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: clamp(10px, 2.4vw, 11px);
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.25s, transform 0.25s;
+      transform: translateX(-6px);
+    }
+
+    .card:hover .card-arrow { opacity: 1; transform: translateX(0); }
+
+    .card-arrow svg { width: 13px; height: 13px; stroke: var(--gold); flex-shrink: 0; }
+
+    /* Footer */
+    .footer {
+      margin-top: clamp(28px, 6vw, 40px);
+      font-size: clamp(11px, 2.6vw, 12px);
+      color: var(--text-light);
+      font-style: italic;
+      opacity: 0;
+      animation: riseIn 0.6s ease 1.2s forwards;
+      text-align: center;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .card, .header, .footer { opacity: 1; }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+<div class="wrapper">
 
-    <div class="slogan">Brille & Vibre</div>
-
-    <img src="menu.jpg" alt="Logo" class="logo">
-
-    <h1>Ma Boîte à Outils</h1>
-
-    <div class="menu">
-
-        <!-- Les Bases : pierres zen -->
-<a href="https://kcoaching02.github.io/BAP_SOUS-MENU-LES-BASES/" class="menu-item" target="_blank">
-    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <ellipse cx="12" cy="17" rx="7" ry="3.5"/>
-        <ellipse cx="12" cy="11" rx="5" ry="2.5"/>
-        <ellipse cx="12" cy="6" rx="3" ry="1.5"/>
-    </svg>
-    Les Bases
-</a>
-
-        <!-- Kit Code Liberté : papillon -->
-        <a href="kit-code-liberte.html" class="menu-item">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 12c-2-4-6-6-8-5s0 5 4 6c-4 1-6 4-4 6s6-1 8-5"/>
-                <path d="M12 12c2-4 6-6 8-5s0 5-4 6c4 1 6 4 4 6s-6-1-8-5"/>
-                <circle cx="12" cy="12" r="1"/>
-            </svg>
-            Kit Code Liberté
-        </a>
-
-        <!-- Prompts : bulle arrondie -->
-<a href="https://kcoaching02.github.io/prompt/" class="menu-item" target="_blank">
-    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/>
-    </svg>
-    Prompts
-</a>
-
-
-        <!-- Aides à la vente : main ouverte -->
-        <a href="https://kcoaching02.github.io/BAO_Aide-la-Vente/" class="menu-item">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 15c2 1 4 2 6 2s4-1 6-3"/>
-                <path d="M4 12c2 1 4 2 6 2s4-1 6-3"/>
-                <path d="M4 9c2 1 4 2 6 2s4-1 6-3"/>
-            </svg>
-            Aides à la vente
-        </a>
-
+  <div class="header">
+    <div class="logo-ring">
+      <img src="menu.jpg" alt="Brille & Vibre" class="logo-img">
     </div>
+    <p class="brand">Brille &amp; Vibre</p>
+    <h1 class="page-title">Ma <em>Boîte</em><br>à Outils</h1>
+    <p class="subtitle">Tous tes outils au même endroit,<br>prêts à l'emploi.</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="grid">
+
+    <a href="https://kcoaching02.github.io/BAP_SOUS-MENU-LES-BASES/" class="card" target="_blank">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <ellipse cx="12" cy="17" rx="7" ry="3.5"/>
+          <ellipse cx="12" cy="11" rx="5" ry="2.5"/>
+          <ellipse cx="12" cy="6" rx="3" ry="1.5"/>
+        </svg>
+      </div>
+      <div class="card-label">Les Bases</div>
+      <div class="card-desc">Fondations solides pour démarrer</div>
+      <div class="card-arrow">
+        Ouvrir
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <a href="kit-code-liberte.html" class="card">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 12c-2-4-6-6-8-5s0 5 4 6c-4 1-6 4-4 6s6-1 8-5"/>
+          <path d="M12 12c2-4 6-6 8-5s0 5-4 6c4 1 6 4 4 6s-6-1-8-5"/>
+          <circle cx="12" cy="12" r="1" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="card-label">Kit Code Liberté</div>
+      <div class="card-desc">Ton kit pour vendre en autonomie</div>
+      <div class="card-arrow">
+        Ouvrir
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <a href="https://kcoaching02.github.io/prompt/" class="card" target="_blank">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/>
+        </svg>
+      </div>
+      <div class="card-label">Prompts Marketing</div>
+      <div class="card-desc">Générateur de prompts IA</div>
+      <div class="card-arrow">
+        Ouvrir
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <a href="https://kcoaching02.github.io/BAO_Aide-la-Vente/" class="card" target="_blank">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 15c2 1 4 2 6 2s4-1 6-3"/>
+          <path d="M4 12c2 1 4 2 6 2s4-1 6-3"/>
+          <path d="M4 9c2 1 4 2 6 2s4-1 6-3"/>
+        </svg>
+      </div>
+      <div class="card-label">Aides à la Vente</div>
+      <div class="card-desc">Scripts et supports de vente</div>
+      <div class="card-arrow">
+        Ouvrir
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+  </div>
+
+  <p class="footer">brillevibre.com &nbsp;·&nbsp; © 2025</p>
 
 </div>
 
