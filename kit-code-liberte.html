@@ -1,167 +1,367 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Kit Code Liberté</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kit Code Liberté — Brille & Vibre</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold:       #C9A84C;
+      --gold-light: #E8CC80;
+      --gold-pale:  #F5EDD4;
+      --gold-dark:  #9A7530;
+      --cream:      #FAF6EF;
+      --beige:      #EDE4D3;
+      --black:      #0D0D0D;
+      --text:       #3A2E24;
+      --text-light: #8C7560;
+      --border:     rgba(201,168,76,0.2);
+      --card:       #ffffff;
+      --shadow:     rgba(58,46,36,0.08);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: "Segoe UI", sans-serif;
-            background: #f3e9dd;
-            color: #4a4a4a;
-            overflow-x: hidden;
-        }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            animation: fadeIn 1s ease-out forwards;
-            text-align: center;
-        }
+    /* ── BACK BAR ── */
+    .back-bar {
+      background: var(--black);
+      padding: 13px 24px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(250,246,239,0.6);
+      text-decoration: none;
+      padding: 7px 13px;
+      border-radius: 8px;
+      border: 1px solid rgba(201,168,76,0.25);
+      background: rgba(201,168,76,0.08);
+      transition: all 0.2s ease;
+    }
+    .back-btn:hover {
+      background: rgba(201,168,76,0.18);
+      border-color: rgba(201,168,76,0.5);
+      color: var(--gold-light);
+      transform: translateX(-2px);
+    }
+    .back-btn svg { width: 13px; height: 13px; stroke: currentColor; flex-shrink: 0; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    /* ── HEADER ── */
+    .header {
+      text-align: center;
+      padding: 52px 20px 40px;
+      animation: fadeUp 0.6s ease forwards;
+    }
 
-        /* Logo */
-        .logo {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center;
-            border: 5px solid #d8b98b;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-            margin-bottom: 25px;
-        }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-        h1 {
-            text-align: center;
-            font-size: 34px;
-            font-weight: 600;
-            color: #6b5a4a;
-            margin-bottom: 40px;
-        }
+    .logo-ring {
+      position: relative;
+      width: 100px; height: 100px;
+      margin: 0 auto 22px;
+    }
+    .logo-ring::before {
+      content: '';
+      position: absolute; inset: -5px;
+      border-radius: 50%;
+      background: conic-gradient(var(--gold), var(--gold-light), var(--gold-pale), var(--gold), var(--gold-light), var(--gold));
+      animation: spin 8s linear infinite;
+    }
+    .logo-ring::after {
+      content: '';
+      position: absolute; inset: -3px;
+      border-radius: 50%;
+      background: var(--cream);
+    }
+    .logo-img {
+      position: relative; z-index: 1;
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover; object-position: center;
+      display: block;
+    }
 
-        .section {
-            background: #fff;
-            padding: 25px;
-            border-radius: 16px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.10);
-            transition: transform 0.3s ease;
-            text-align: left;
-        }
+    .header-eyebrow {
+      font-family: 'Playfair Display', serif;
+      font-size: 12px; font-style: italic;
+      letter-spacing: 2px; color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 7vw, 48px);
+      font-weight: 900; line-height: 1.15;
+      color: var(--text); margin-bottom: 12px;
+    }
+    .header h1 em { font-style: italic; color: var(--gold); }
+    .divider {
+      width: 40px; height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 2px; margin: 14px auto 16px;
+    }
+    .header-sub {
+      font-size: 14px; color: var(--text-light); max-width: 340px; margin-inline: auto; line-height: 1.6;
+    }
 
-        .section:hover {
-            transform: translateY(-4px);
-        }
+    /* ── GRID ── */
+    .grid {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
 
-        .section-title {
-            font-size: 22px;
-            font-weight: 600;
-            color: #b79c84;
-            margin-bottom: 12px;
-        }
+    /* ── RESOURCE CARD ── */
+    .res-card {
+      background: var(--card);
+      border: 1.5px solid var(--beige);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      box-shadow: 0 4px 14px var(--shadow);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .res-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(201,168,76,0.18);
+      border-color: var(--gold);
+    }
 
-        a.link {
-            display: inline-block;
-            margin-top: 8px;
-            font-size: 18px;
-            color: #6b5a4a;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 10px 16px;
-            background: #f3e9dd;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
+    .res-card-top {
+      background: linear-gradient(135deg, var(--gold-pale), var(--beige));
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--beige);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .res-icon {
+      font-size: 22px;
+      width: 42px; height: 42px;
+      background: white;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(201,168,76,0.15);
+    }
+    .res-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 3px;
+      font-family: 'DM Mono', monospace;
+    }
+    .res-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px; font-weight: 700;
+      color: var(--text); line-height: 1.25;
+    }
 
-        a.link:hover {
-            background: #d8b98b;
-            color: #1a1a1a;
-        }
-    </style>
+    .res-card-bottom {
+      padding: 14px 20px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+    }
+    .res-desc {
+      font-size: 13px;
+      color: var(--text-light);
+      line-height: 1.5;
+      flex: 1;
+      padding-right: 12px;
+    }
+    .res-arrow {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    .res-card:hover .res-arrow { transform: translateX(3px); }
+    .res-arrow svg { width: 14px; height: 14px; stroke: var(--black); }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding-bottom: 40px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--text-light);
+    }
+
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: 1fr; }
+      .header { padding: 40px 16px 32px; }
+      .grid { padding: 0 16px 60px; }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+<!-- ── BACK BAR ── -->
+<div class="back-bar">
+  <a href="https://kcoaching02.github.io/BAO_MENU/" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Boîte à Outils
+  </a>
+</div>
 
-    <!-- Logo CL4 -->
-    <img src="CL4.jpg" alt="Logo Code Liberté" class="logo">
+<!-- ── HEADER ── -->
+<div class="header">
+  <div class="logo-ring">
+    <img src="CL4.jpg" alt="Code Liberté" class="logo-img">
+  </div>
+  <div class="header-eyebrow">Brille &amp; Vibre</div>
+  <h1>Ton Kit<br><em>Code Liberté</em></h1>
+  <div class="divider"></div>
+  <p class="header-sub">Toutes tes ressources pour lancer et développer ton business en ligne.</p>
+</div>
 
-    <h1>Ton Kit Code Liberté</h1>
+<!-- ── GRID ── -->
+<div class="grid">
 
-    <!-- Création entreprise -->
-    <div class="section">
-        <div class="section-title">Créer ton entreprise</div>
-        <a href="https://www.skool.com/code-liberte-2496/classroom/12303da3?md=64123537135a4b33880b21f01f52c4e9" class="link" target="_blank">
-            Création / Adaptation de la micro‑entreprise – Déclare ton activité
-        </a>
+  <a href="https://www.skool.com/code-liberte-2496/classroom/12303da3?md=64123537135a4b33880b21f01f52c4e9" class="res-card" target="_blank">
+    <div class="res-card-top">
+      <div class="res-icon">🏢</div>
+      <div>
+        <div class="res-label">Étape 01</div>
+        <div class="res-title">Créer ton entreprise</div>
+      </div>
     </div>
-
-    <!-- Tunnel de vente -->
-    <div class="section">
-        <div class="section-title">Tunnel de vente</div>
-        <a href="https://www.skool.com/code-liberte-2496/classroom/84e45381?md=cb6154a59c9049f0aca4a2878ad53867" class="link" target="_blank">
-            Templates Boutique / Tunnel de vente – Ton Kit Code Liberté
-        </a>
+    <div class="res-card-bottom">
+      <div class="res-desc">Déclare ton activité et adapte ta micro-entreprise.</div>
+      <div class="res-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
     </div>
+  </a>
 
-    <!-- Vidéo de présentation -->
-    <div class="section">
-        <div class="section-title">Vidéo de présentation</div>
-        <a href="https://vimeo.com/1113495823" class="link" target="_blank">
-            Présentation Code Liberté
-        </a>
+  <a href="https://www.skool.com/code-liberte-2496/classroom/84e45381?md=cb6154a59c9049f0aca4a2878ad53867" class="res-card" target="_blank">
+    <div class="res-card-top">
+      <div class="res-icon">🛒</div>
+      <div>
+        <div class="res-label">Étape 02</div>
+        <div class="res-title">Tunnel de vente</div>
+      </div>
     </div>
+    <div class="res-card-bottom">
+      <div class="res-desc">Templates boutique et tunnel de vente prêts à l'emploi.</div>
+      <div class="res-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </div>
+  </a>
 
-    <!-- Mockup & Logo -->
-    <div class="section">
-        <div class="section-title">Mockup & Logo Code Liberté</div>
-        <a href="https://www.canva.com/design/DAG4SwcOEwU/X20IiDkn57A2h8QE1Wgahw/view?utm_content=DAG4SwcOEwU&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink&mode=preview" class="link" target="_blank">
-            🔗 CL – Logo & Mockup
-        </a>
+  <a href="https://vimeo.com/1113495823" class="res-card" target="_blank">
+    <div class="res-card-top">
+      <div class="res-icon">🎬</div>
+      <div>
+        <div class="res-label">Présentation</div>
+        <div class="res-title">Vidéo de présentation</div>
+      </div>
     </div>
+    <div class="res-card-bottom">
+      <div class="res-desc">Présentation complète de Code Liberté en vidéo.</div>
+      <div class="res-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </div>
+  </a>
 
-    <!-- 2000 vidéos faceless -->
-    <div class="section">
-        <div class="section-title">+2000 vidéos Faceless</div>
-        <a href="https://drive.google.com/drive/folders/15BQU2qHyZbEvRLTMYUaU5zyhi9-2NRMz?usp=share_link" class="link" target="_blank">
-            + 2000 Faceless Aesthetic Videos & Photos – Google Drive
-        </a>
+  <a href="https://www.canva.com/design/DAG4SwcOEwU/X20IiDkn57A2h8QE1Wgahw/view?utm_content=DAG4SwcOEwU&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink&mode=preview" class="res-card" target="_blank">
+    <div class="res-card-top">
+      <div class="res-icon">🎨</div>
+      <div>
+        <div class="res-label">Ressources visuelles</div>
+        <div class="res-title">Mockup &amp; Logo</div>
+      </div>
     </div>
+    <div class="res-card-bottom">
+      <div class="res-desc">Logo officiel et mockups Code Liberté sur Canva.</div>
+      <div class="res-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </div>
+  </a>
 
-    <!-- 20 ebooks PLR -->
-    <div class="section">
-        <div class="section-title">20 Ebooks PLR</div>
-        <a href="https://www.skool.com/code-liberte-2496/classroom/84e45381?md=57518ee38cc741bea333ff4cad9251d6" class="link" target="_blank">
-            20 ebooks PLR – Ton Kit Code Liberté
-        </a>
+  <a href="https://drive.google.com/drive/folders/15BQU2qHyZbEvRLTMYUaU5zyhi9-2NRMz?usp=share_link" class="res-card" target="_blank">
+    <div class="res-card-top">
+      <div class="res-icon">🎥</div>
+      <div>
+        <div class="res-label">Contenu prêt à poster</div>
+        <div class="res-title">+2000 Vidéos Faceless</div>
+      </div>
     </div>
+    <div class="res-card-bottom">
+      <div class="res-desc">Vidéos et photos faceless esthétiques — Google Drive.</div>
+      <div class="res-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </div>
+  </a>
 
-    <!-- Système de vente -->
-    <div class="section">
-        <div class="section-title">Système de vente</div>
-        <a href="https://www.skool.com/code-liberte-2496/classroom/8fe5eb53?md=3ee9878409d84e82b926f4d7fdfb1288" class="link" target="_blank">
-            Création de ta boutique Beacons – Système de vente
-        </a>
+  <a href="https://www.skool.com/code-liberte-2496/classroom/84e45381?md=57518ee38cc741bea333ff4cad9251d6" class="res-card" target="_blank">
+    <div class="res-card-top">
+      <div class="res-icon">📚</div>
+      <div>
+        <div class="res-label">Produits à revendre</div>
+        <div class="res-title">20 Ebooks PLR</div>
+      </div>
     </div>
+    <div class="res-card-bottom">
+      <div class="res-desc">20 ebooks avec droits de revente inclus.</div>
+      <div class="res-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </div>
+  </a>
 
-    <!-- Système d’encaissement -->
-    <div class="section">
-        <div class="section-title">Système d’encaissement</div>
-        <a href="https://www.skool.com/code-liberte-2496/classroom/3c529102?md=3680398b5ecf4bc08911787dd3cc86c0" class="link" target="_blank">
-            Introduction – Ton système d’encaissement
-        </a>
+  <a href="https://www.skool.com/code-liberte-2496/classroom/8fe5eb53?md=3ee9878409d84e82b926f4d7fdfb1288" class="res-card" target="_blank">
+    <div class="res-card-top">
+      <div class="res-icon">🔗</div>
+      <div>
+        <div class="res-label">Étape 03</div>
+        <div class="res-title">Système de vente</div>
+      </div>
     </div>
+    <div class="res-card-bottom">
+      <div class="res-desc">Création de ta boutique Beacons et système de vente.</div>
+      <div class="res-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </div>
+  </a>
+
+  <a href="https://www.skool.com/code-liberte-2496/classroom/3c529102?md=3680398b5ecf4bc08911787dd3cc86c0" class="res-card" target="_blank">
+    <div class="res-card-top">
+      <div class="res-icon">💳</div>
+      <div>
+        <div class="res-label">Étape 04</div>
+        <div class="res-title">Système d'encaissement</div>
+      </div>
+    </div>
+    <div class="res-card-bottom">
+      <div class="res-desc">Mise en place de ton système de paiement et encaissement.</div>
+      <div class="res-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </div>
+  </a>
 
 </div>
+
+<div class="footer">brillevibre.com · © 2025</div>
 
 </body>
 </html>
